@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const tasks = [{ id: 1, title: 'finish homework', createdAt: 'Wed May 01 2023 09:44:18 GMT+0200 (Central European Summer Time)', finishedAt: 'Wed May 02 2023 09:44:18 GMT+0200 (Central European Summer Time)' }, { id: 2, title: 'do the dishes', createdAt: 'Wed May 16 2023 09:44:18 GMT+0200 (Central European Summer Time)', finishedAt: '' }];
+const tasks = [{ id: 1, title: 'finish homework', createdAt: 'Wed May 01 2023 09:44:18 GMT+0200 (Central European Summer Time)', finishedAt: 'Wed May 02 2023 09:44:18 GMT+0200 (Central European Summer Time)', email: 'test@gmail.com' }, { id: 2, title: 'do the dishes', createdAt: 'Wed May 16 2023 09:44:18 GMT+0200 (Central European Summer Time)', finishedAt: '', email: 'test@gmail.com' }];
 let highestId = 2;
 
 function verifyLogin (req) {
@@ -12,7 +12,6 @@ function verifyLogin (req) {
     };
 }
 
-/* GET users listing. */
 router.get('/', function (req, res, next) {
     if (verifyLogin(req)) {
         res.json(tasks);
@@ -28,6 +27,7 @@ router.post('/', function (req, res, next) {
         const id = highestId;
         const createdAt = Date();
         const finishedAt = '';
+        const email = req.session.email;
 
         let task = {};
         if (title) {
@@ -35,7 +35,8 @@ router.post('/', function (req, res, next) {
                 id,
                 title,
                 createdAt,
-                finishedAt
+                finishedAt,
+                email
             };
             tasks.push(task);
         } else {
