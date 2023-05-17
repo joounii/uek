@@ -31,4 +31,14 @@ router.post('/', function (req, res, next) {
     res.status(201).json(task);
 });
 
+router.get('/:id', function (req, res, next) {
+    let taskInfos;
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].id.toString() === req.params.id) {
+            taskInfos = tasks[i];
+        }
+    }
+    res.json(taskInfos);
+});
+
 module.exports = router;
