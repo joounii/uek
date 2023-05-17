@@ -39,10 +39,10 @@ router.post('/', function (req, res, next) {
                 email
             };
             tasks.push(task);
+            res.status(201).json(task);
         } else {
             res.status(406).json('no title exists');
         };
-        res.status(201).json(task);
     } else {
         res.status(403).json('you need to log in to do this');
     };
