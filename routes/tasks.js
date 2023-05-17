@@ -27,18 +27,22 @@ router.post('/', function (req, res, next) {
         tasks.push(task);
     } else {
         res.status(400).send('no title exists');
-    }
+    };
     res.status(201).json(task);
 });
 
 router.get('/:id', function (req, res, next) {
-    let taskInfos;
+    let taskInfos = '';
     for (let i = 0; i < tasks.length; i++) {
         if (tasks[i].id.toString() === req.params.id) {
             taskInfos = tasks[i];
         }
-    }
-    res.json(taskInfos);
+    };
+    if (taskInfos === '') {
+        res.sendStatus(404);
+    } else {
+        res.json(taskInfos);
+    };
 });
 
 module.exports = router;
