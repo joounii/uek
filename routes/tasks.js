@@ -56,7 +56,7 @@ router.get('/:id', function (req, res, next) {
             }
         };
         if (taskInfos === '') {
-            res.sendStatus(404).json('id doesnt exist');
+            res.status(404).json('id doesnt exist');
         } else {
             res.json(taskInfos);
         };
@@ -70,7 +70,7 @@ router.put('/:id', function (req, res, next) {
         let taskToUpdate = '';
         const { title, finishedAt } = req.body;
         if (title && finishedAt) {
-            if (req.params.id) {
+            if (!req.params.id) {
                 res.status(404).json('id doesnt exist');
             } else {
                 for (let i = 0; i < tasks.length; i++) {
@@ -108,7 +108,7 @@ router.delete('/:id', function (req, res, next) {
         }
 
         if (taskToDelete === '') {
-            res.status(404).send('id doesnt exist');
+            res.status(404).json('id doesnt exist');
         } else {
             res.status(200).json(taskToDelete);
         };
