@@ -39,7 +39,7 @@ router.post('/', function (req, res, next) {
             };
             tasks.push(task);
         } else {
-            res.status(400).json('no title exists');
+            res.status(406).json('no title exists');
         };
         res.status(201).json(task);
     } else {
