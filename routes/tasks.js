@@ -46,7 +46,7 @@ router.get('/:id', function (req, res, next) {
 });
 
 router.put('/:id', function (req, res, next) {
-    let taskToUpdate;
+    let taskToUpdate = '';
     const { title, finishedAt } = req.body;
     if (title && finishedAt) {
         for (let i = 0; i < tasks.length; i++) {
@@ -55,18 +55,22 @@ router.put('/:id', function (req, res, next) {
             }
         }
 
-        const index = tasks.indexOf(taskToUpdate);
+        if (taskToUpdate === '') {
+            res.status(404).send('id doesnt exist');
+        } else {
+            const index = tasks.indexOf(taskToUpdate);
 
-        tasks[index].title = title;
-        tasks[index].finishedAt = finishedAt;
-        res.status(200).json(tasks[index]);
+            tasks[index].title = title;
+            tasks[index].finishedAt = finishedAt;
+            res.status(200).json(tasks[index]);
+        };
     } else {
         res.status(404).send('missing parameters');
     };
 });
 
 router.delete('/:id', function (req, res, next) {
-    let taskToDelete;
+    let taskToDelete = '';
     for (let i = 0; i < tasks.length; i++) {
         if (tasks[i].id.toString() === req.params.id) {
             taskToDelete = tasks[i];
@@ -78,7 +82,11 @@ router.delete('/:id', function (req, res, next) {
         tasks.splice(index, 1);
     }
 
-    res.status(200).json(taskToDelete);
+    if (taskToDelete === '') {
+        res.status(404).send('id doesnt exist')
+    } else {
+        res.status(200).json(taskToDelete);
+    };
 });
 
 module.exports = router;
