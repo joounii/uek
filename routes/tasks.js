@@ -26,7 +26,7 @@ router.post('/', function (req, res, next) {
         };
         tasks.push(task);
     } else {
-        res.status(400).send('no title exists');
+        res.status(400).json('no title exists');
     };
     res.status(201).json(task);
 });
@@ -39,7 +39,7 @@ router.get('/:id', function (req, res, next) {
         }
     };
     if (taskInfos === '') {
-        res.sendStatus(404);
+        res.sendStatus(404).json('id doesnt exist');
     } else {
         res.json(taskInfos);
     };
@@ -49,15 +49,15 @@ router.put('/:id', function (req, res, next) {
     let taskToUpdate = '';
     const { title, finishedAt } = req.body;
     if (title && finishedAt) {
-        for (let i = 0; i < tasks.length; i++) {
-            if (tasks[i].id.toString() === req.params.id) {
-                taskToUpdate = tasks[i];
-            }
-        }
-
-        if (taskToUpdate === '') {
-            res.status(404).send('id doesnt exist');
+        if (req.params.id) {
+            res.status(404).json('id doesnt exist');
         } else {
+            for (let i = 0; i < tasks.length; i++) {
+                if (tasks[i].id.toString() === req.params.id) {
+                    taskToUpdate = tasks[i];
+                }
+            }
+
             const index = tasks.indexOf(taskToUpdate);
 
             tasks[index].title = title;
@@ -65,7 +65,7 @@ router.put('/:id', function (req, res, next) {
             res.status(200).json(tasks[index]);
         };
     } else {
-        res.status(404).send('missing parameters');
+        res.status(406).json('missing parameters');
     };
 });
 
