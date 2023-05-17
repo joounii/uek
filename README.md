@@ -2,8 +2,8 @@
 author: Jonathan Furrer
 
 
-if you run the project for the first time do ```$npm install``` after that you can start the project with ```$npm run startup```
+If you run the project for the first time do ```$npm install``` after that you can start the project with ```$npm run startup```
 
 ### infos
 
-[documentation](http://localhost:3000/api-docs/)
+To open the documentation start the project and then go to this link: [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
