@@ -45,4 +45,40 @@ router.get('/:id', function (req, res, next) {
     };
 });
 
+router.put('/:id', function (req, res, next) {
+    let taskToUpdate;
+    const { title, finishedAt } = req.body;
+    if (title && finishedAt) {
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].id.toString() === req.params.id) {
+                taskToUpdate = tasks[i];
+            }
+        }
+
+        const index = tasks.indexOf(taskToUpdate);
+
+        tasks[index].title = title;
+        tasks[index].finishedAt = finishedAt;
+        res.status(200).json(tasks[index]);
+    } else {
+        res.status(404).send('missing parameters');
+    };
+});
+
+router.delete('/:id', function (req, res, next) {
+    let taskToDelete;
+    for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].id.toString() === req.params.id) {
+            taskToDelete = tasks[i];
+        }
+    }
+
+    const index = tasks.indexOf(taskToDelete);
+    if (index > -1) {
+        tasks.splice(index, 1);
+    }
+
+    res.status(200).json(taskToDelete);
+});
+
 module.exports = router;
